@@ -280,7 +280,5 @@ jetson nano의 서버가 실행된 상태에서 컴퓨터가 휴대폰으로 jet
   <img  width="100%" src="images/result-video.gif">
 </div>
 
-최종적으로 웹캠을 사용한 라이브 스트리밍과 그래프 시각화는 여기에서(https://user-images.githubusercontent.com/65693240/130826740-faacbdd9-a5d3-4db8-8524-7448c2961251.mp4
-
-) 볼 수 있다.
+최종적으로 웹캠을 사용한 라이브 스트리밍과 그래프 시각화는 여기에서(https://user-images.githubusercontent.com/65693240/130826740-faacbdd9-a5d3-4db8-8524-7448c2961251.mp4) 볼 수 있다.
 

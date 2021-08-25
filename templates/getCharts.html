@@ -1,0 +1,225 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>  
+<script src="http://code.highcharts.com/highcharts.js"></script>  
+<script type="text/javascript">  
+  
+var timeStamp = []; //감지된 시간 저장 배열  
+var detectedObjects = []; //감지된 사람 저장 배열  
+var violatingObjects = []; //사회적 거리두기를 어긴 횟수 배열  
+var repr_times = 0; //5분간격 시간 
+var collect_detecObjects = 0; //5분동안 감지된 사람 수 
+var collect_vioatingObjects = 0; //5분동안 사회적 거리두기를 어긴 횟수 
+var index = 0; //5분 카운트 변수 
+  
+//파일을 백그라운드에서 받기위한 Ajax  
+$(document).ready(function() {  
+function getLog() {  
+
+var param = '{{ param }}';
+console.log('param : ', param);
+
+
+  $ 
+  .ajax({  
+  //url : 'https://smart-social-distancing-test.s3.ap-northeast-2.amazonaws.com/sources/0/object_logs/e84b34-2021-02-16-test.csv ', // 읽어올 파일의 경로 
+  url : 'https://s3.ap-northeast-2.amazonaws.com/smart-social-distancing/'+param, 
+dataType : 'text',         // 읽어온 파일을 활용하기 위한 형태  
+success : function(data) { // ajax 성공시,  
+var count = 0;  
+var allRow = data.split(/\r?\n|\r/); // 띄어쓰기 단위로 구분  
+  
+//최근 75분의 데이터만 저장(1분에 114개 x 5분간격 x 15번) 
+if (allRow.length > 8550) {  
+allRow = allRow.slice(-8550,);  
+} 
+var flag = true; 
+  
+  
+for (var singleRow = 1; singleRow < allRow.length; singleRow++) { //0번째 열은 글자임. 데이터는 1번쨰 열부터 
+collapse = allRow[singleRow].split(","); // 콤마     단위로 구분  
+  
+if (flag == true) { 
+repr_times = collapse[0]; 
+//console.log("repr_times : " + repr_times); 
+flag = false; 
+} 
+  
+for (var count = 0; count < collapse.length; count++) {  
+  
+/*  
+          0번쨰 : timeStamp  
+          1번째 : detectedObjects  
+          2번쨰 : violatingObjects  
+*/  
+textIn = collapse[count]; // 구분된 문자열을 문자 단위로 쪼개서 삽입  
+  
+if (count % 3 == 0) { //5분마다 timeStamp 배열에 저장  
+              if (textIn != repr_times || index == 5) { 
+                  repr_times = textIn; 
+                  index++; 
+              } 
+              if (index > 5) { 
+                  timeStamp.push(textIn); 
+                  index = 0; //index 초기화 
+              } 
+//console.log(textIn);  
+}  
+  
+else if (count % 3 == 1) { //detectedObjects 배열에 저장  
+    textLine = parseInt(textIn); // 그래프 파싱을 위해 Int형 변환  
+    if (index < 5) { 
+        collect_detecObjects += textLine; 
+        //console.log("collect_detecObjects" + collect_detecObjects + "\n");  
+    } 
+    else if (index == 5) { 
+        detectedObjects.push(collect_detecObjects); 
+        //console.log("input\n"); 
+        collect_detecObjects = 0; //collect_detecObjects 초기화 
+    } 
+} 
+  
+else { //violatingObjects 배열에 저장  
+    textLine = parseInt(textIn); // 그래프 파싱을 위해 Int형 변환  
+    if (index < 5) { 
+        collect_vioatingObjects += textLine; 
+        //console.log("collect_vioatingObjects : " + collect_vioatingObjects + "\n");  
+    } 
+    else if (index == 5) { 
+        violatingObjects.push(collect_vioatingObjects); 
+        collect_vioatingObjects = 0; //collect_vioatingObjects 초기화 
+    } 
+  
+}  
+}  
+}  
+  setTimeout(getLog, 60000); // refresh every 60 seconds  
+}  
+});  
+}  
+
+getLog();  
+
+
+// *******************HighCharts******************//
+
+Highcharts.chart('graph1', {  
+chart : {  
+type : 'areaspline',    // 베이직(직선형) 그래프  
+zoomType : 'x', // x축 방향으로 그래프 그리기 가능  
+events : {         // 차트 이벤트  
+load : function() {  
+var series1 = this.series[0]; // Series의 index 0을 대입  
+var series2 = this.series[1]; // Series의 index 0을 대입
+var i = 0;  
+  
+/*  
+* 6초단위로 데이터를 받아서 동적 그래프에 그려주기 위한 Interval함수  
+*/  
+setInterval(function() {  
+  
+x = timeStamp[i]; // timestamp  
+y1 = detectedObjects[i]; // detectedObjects  
+y2 = violatingObjects[i];  //violatingObjects
+i++; // index값 증가  
+
+series1.addPoint([ x, y1 ], true, true); // series1에 데이터 추가  
+series2.addPoint([ x, y2 ], true, true); // series2에 데이터 추가  
+  
+}, 6000); // interval end  
+}         // load     end  
+} // events   end  
+},         // charts   end  
+  
+title : {  
+text : 'occupancy graph' // 그래프 이름  
+},  
+  
+tooltip : {  
+crosshairs : [ false, true ], // 특정 포인트를 짚으면 [x, y] 축 둘중 하나의 축에 대한 라인이 생긴다.  
+valueDecimals : 2 // long형 데이터를 받기 위함  
+},  
+  
+
+xAxis : {  
+categories : timeStamp  
+//type : 'string' // x축 단위  
+  
+},  
+  
+yAxis : {  
+labels : {  
+formatter : function() {  
+return this.value + ' occupancy';     // y축 단위  
+} // formatter end  
+}, // labels    end  
+  
+type : 'column', // 선형 그래프  
+gridLineWidth : 1, // 선 굵기  
+
+},   
+
+tooltip: { 
+        shared: true, 
+        valueSuffix: ' units' 
+    }, 
+    credits: { 
+        enabled: false 
+    }, 
+    plotOptions: { 
+        areaspline: { 
+            fillOpacity: 0.5 
+        } 
+    }, 
+
+/*  
+* 데이터 -> 그래프 삽입 부분  
+*/  
+series : [ {  
+data : (function() {  
+var data = [], i; // 보여질 데이터, 반복문 인자  
+for (i = -9; i <= 0; i++) {  
+data.push({  
+x : detectedObjects[i] + i * 1000  
+});  
+}  
+return data;  
+})(),  
+lineWidth : 1,    // 라인 넓이  
+name : 'occupancy log'            // 데이터 이름  
+},
+
+{
+data : (function() {  
+var data = [], i; // 보여질 데이터, 반복문 인자  
+for (i = -9; i <= 0; i++) {  
+data.push({  
+x : violatingObjects[i] + i * 1000  
+});  
+}  
+return data;  
+})(),  
+lineWidth : 1,    // 라인 넓이  
+name : 'violating log'            // 데이터 이름  
+}  
+
+]  
+});  
+});  
+</script>  
+  
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">  
+<title>smart-social-distancing</title>  
+</head>  
+  
+<div id="graph1" style="height: 400px"></div>  
+<div> 
+   <a href="./s3_streaming.html"> 
+     <button> 
+         home 
+      </button> 
+   </a> 
+</div> 
+</body>  
+</html>  

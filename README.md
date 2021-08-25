@@ -30,9 +30,8 @@
 
 이 프로젝트는 전체적으로 사회적 거리두기를 감지하는 영역과 이를 웹사이트로 모니터링 할 수 있는 영역으로 나뉜다.
 프로젝트 전체 플로우는 아래 사진에 나타내었다.
-<div align="center">
+
   <img  width="100%" src="<img width="950" alt="projectFlow" src="https://user-images.githubusercontent.com/65693240/130828219-19ef0d56-cfc5-4523-b778-59102b84e5dc.png">">
-</div>
 
 
 ## Getting Started
@@ -160,9 +159,7 @@ $ sudo docker run hello-world
 #실행하면 아래 사진처럼 나와야 함
 ```
 
-<div align="center">
   <img  width="100%" src="i![docker-hello_world](https://user-images.githubusercontent.com/65693240/130828191-04593538-7569-4f1f-90af-a59cfbd4eee8.png)">
-</div>
 
 ```bash
 #도커 버전 확인
@@ -233,9 +230,7 @@ secret access key
 나는 내가 참고한 깃허브와 차별성을 위해 사람들 간에 거리를 구하는 방식으로 이 bird's eye view방식을 추가하였다.
 또한 이 방법을 사용하면 사람들 간의 거리를 좀 더 정확하게 구할 수 있다.
 
-<div align="center">
   <img  width="100%" src="images/![bird's_eye_view](https://user-images.githubusercontent.com/65693240/130828136-fdb4e936-a4b4-48f8-95de-3e28ce091c64.png)">
-</div>
 (https://deepnote.com/@deepnote/A-social-distancing-detector-using-a-Tensorflow-object-detection-model-Python-and-OpenCV-KBcEvWejRjGyjy2YnxiP5Q)
 
 
@@ -270,16 +265,12 @@ jetson nano의 서버가 실행된 상태에서 컴퓨터가 휴대폰으로 jet
 
 프로젝트를 실행하면 사람을 인식하여 바운딩 박스를 친 영상이 ts파일로 저장되는 것을 볼 수 있다.
 
-<div align="center">
   <img  width="100%" src="![result-ts_file](https://user-images.githubusercontent.com/65693240/130828240-131f6865-36d5-4b12-a52d-9c2f805f87b2.png)">
-</div>
 
 
 비디오를 입력 영상으로 설정할 경우 아래와 같은 결과를 볼 수 있다.
 
-<div align="center">
   <img  width="100%" src="![result-video](https://user-images.githubusercontent.com/65693240/130828399-7b02d591-b8d1-4376-bcbb-0d726ce2bad6.gif)f">
-</div>
 
 최종적으로 웹캠을 사용한 라이브 스트리밍과 그래프 시각화는 [여기에서](https://user-images.githubusercontent.com/65693240/130826740-faacbdd9-a5d3-4db8-8524-7448c2961251.mp4) 볼 수 있다.
 

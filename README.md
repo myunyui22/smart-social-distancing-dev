@@ -1,6 +1,4 @@
-# smart-social-distancing-dev[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-# Smart Social Distancing
+# smart-social-distancing-dev
 
 - [Smart Social Distancing](#smart-social-distancing)
   - [Introduction](#Introduction)

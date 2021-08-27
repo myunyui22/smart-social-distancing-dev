@@ -2,6 +2,7 @@
 
 - [Smart Social Distancing](#smart-social-distancing)
   - [Introduction](#Introduction)
+    - [Object detection model](#Object-detection-model) 
   - [Getting Started](#getting-started)
     - [requirements](#requirements)
     - [docker start](#docker-start)
@@ -32,6 +33,12 @@ The project is divided into areas that detect social distancing as a whole and a
 The entire flow of the project is shown in the picture below.
 
 <img width="950" alt="projectFlow" src="https://user-images.githubusercontent.com/65693240/130828219-19ef0d56-cfc5-4523-b778-59102b84e5dc.png">
+
+
+### Object-detection-model
+
+
+The core of this application uses Convolutional Neural Networks to detect pedestrians. I used SSD-MobileNet-V2 trained on the COCO dataset as the default model for this application.
 
 
 ## Getting Started
@@ -278,3 +285,5 @@ If you set the video as an input image, you can see the results below.
 
 Finally, live streaming and graph visualizations using webcams can be found [here](https://user-images.githubusercontent.com/65693240/130826740-faacbdd9-a5d3-4db8-8524-7448c2961251.mp4).
 
+
+Now, the basis for monitoring social distancing has been established by connecting webcams to jetson nano.Now if you connect the jetson nano to the cctv you have, a distancing monitoring system will be established without having to purchase the program separately.

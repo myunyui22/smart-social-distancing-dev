@@ -203,6 +203,8 @@ You can modify VideoPath of categor [source_0] to the video path in config-jetso
 
 ### run-with-webcam
 
+I used the oCam-1MGN-U camera model for this project.
+
 
 After connecting the webcam to jetson nano
 ```bash

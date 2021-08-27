@@ -215,8 +215,11 @@ In order to upload to S3, you need to provide AWS_BUCKET_REGION, AWS_ACCESS_KEY_
 There are four pieces of information that need to be entered.
 
 1)aws bucket region
+
 2)aws access key ID
+
 3)aws secret access key
+
 4)secret access key
 
 

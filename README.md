@@ -89,7 +89,7 @@ In order to run this project, a docker must be installed in the jetson nano.
 If you haven't installed the docker yet, please follow the instructions below.
 
 
-#### 설치 가능한 환경
+#### Installable Environment
 Ubuntu Groovy 20.10
 
 Ubuntu Focal 20.04 (LTS)
@@ -99,7 +99,7 @@ Ubuntu Bionic 18.04 (LTS) <<me!
 Ubuntu Xenial 16.04 (LTS)
 
 
-#### 이전에 설치된 도커 삭제
+#### Delete previously installed docker
 
 
 Even if the docker is deleted, images and containers can be preserved.
@@ -108,7 +108,7 @@ $ sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
 
 
-#### 도커 설치
+#### Docker Installation
 
 
 ```bash

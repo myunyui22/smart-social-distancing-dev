@@ -12,8 +12,8 @@ class S3Uploader:
 
     def __init__(self):
         session = boto3.session.Session(
-            aws_access_key_id=os.environ.get("AKIAXP4TGTGKTJ337VVR"),
-            aws_secret_access_key=os.environ.get("Hvq0o6r1vtysd2QdSaxxxtTWGAGOA6pxz1cgebI8"),
+            aws_access_key_id=os.environ.get("YOUR_ACCESS_KEY"),
+            aws_secret_access_key=os.environ.get("YOUR_SECRET_ACCESS_KEY"),
             region_name=os.environ.get("ap-northeast-2")
         )
         self.s3_resource = session.resource('s3')
